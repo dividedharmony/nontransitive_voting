@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170121200453) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "animes", force: :cascade do |t|
     t.string   "title",      null: false
     t.datetime "created_at", null: false
@@ -25,8 +28,8 @@ ActiveRecord::Schema.define(version: 20170121200453) do
     t.integer  "candidate_b_id",   null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.index ["candidate_a_type", "candidate_a_id"], name: "index_ballots_on_candidate_a_type_and_candidate_a_id"
-    t.index ["candidate_b_type", "candidate_b_id"], name: "index_ballots_on_candidate_b_type_and_candidate_b_id"
+    t.index ["candidate_a_type", "candidate_a_id"], name: "index_ballots_on_candidate_a_type_and_candidate_a_id", using: :btree
+    t.index ["candidate_b_type", "candidate_b_id"], name: "index_ballots_on_candidate_b_type_and_candidate_b_id", using: :btree
   end
 
   create_table "votes", force: :cascade do |t|
@@ -35,8 +38,8 @@ ActiveRecord::Schema.define(version: 20170121200453) do
     t.integer  "selected_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.index ["ballot_id"], name: "index_votes_on_ballot_id"
-    t.index ["selected_type", "selected_id"], name: "index_votes_on_selected_type_and_selected_id"
+    t.index ["ballot_id"], name: "index_votes_on_ballot_id", using: :btree
+    t.index ["selected_type", "selected_id"], name: "index_votes_on_selected_type_and_selected_id", using: :btree
   end
 
 end

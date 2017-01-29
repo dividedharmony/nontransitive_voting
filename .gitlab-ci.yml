@@ -1,5 +1,14 @@
 image: "ruby:2.3"
 
+services:
+  - postgres:latest
+
+variables:
+  POSTGRES_DB: straight_a_awards_test
+  POSTGRES_USER: runner
+  POSTGRES_PASSWORD: ""
+  TEST_DB_HOST: postgresql
+
 before_script:
   - apt-get update -qq && apt-get install -y -qq sqlite3 libsqlite3-dev nodejs
   - ruby -v
