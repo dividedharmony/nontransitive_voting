@@ -6,9 +6,8 @@ Rails.application.routes.draw do
   resource :animes, only: [:new, :create, :show]
   get 'animes/all', to: 'animes#index'
 
-  get 'vote/:id', to: 'ballots#show'
-  post 'vote_candidate_a/:id', to: 'ballots#vote_candidate_a', as: :vote_candidate_a
-  post 'vote_candidate_b/:id', to: 'ballots#vote_candidate_b', as: :vote_candidate_b
+  get 'vote/:id', to: 'ballots#show', as: :vote_on_ballot
+  post 'vote_candidate/:ballot_id/:a_or_b', to: 'ballots#vote_candidate', as: :vote_candidate
 
   get 'finished_voting', to: 'pages#finished_voting', as: :finished_voting
 end

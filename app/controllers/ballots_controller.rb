@@ -6,21 +6,11 @@ class BallotsController < ApplicationController
     @vote = Vote.new
   end
 
-  def vote_candidate_a
-    @ballot = Ballot.find(params[:id])
-    @vote = build_vote('candidate_a')
+  def vote_candidate
+    @ballot = Ballot.find(params[:ballot_id])
+    @vote = build_vote(params[:a_or_b])
     if @vote.save
-      redirect_to action: :show, id: next_ballot_id
-    else
-      render action: :show
-    end
-  end
-
-  def vote_candidate_b
-    @ballot = Ballot.find(params[:id])
-    @vote = build_vote('candidate_b')
-    if @vote.save
-      redirect_to action: :show, id: next_ballot_id
+      next_ballot
     else
       render action: :show
     end
@@ -28,13 +18,17 @@ class BallotsController < ApplicationController
 
   private
 
+  def next_ballot
+    if Ballot.last == @ballot
+      redirect_to finished_voting_url
+    else
+      redirect_to action: :show, id: Ballot.find_by('id > ?', @ballot.id)
+    end
+  end
+
   def build_vote(candidate_string)
     Vote.new(ballot: @ballot,
              selected_type: @ballot.attributes["#{candidate_string}_type"],
              selected_id: @ballot.attributes["#{candidate_string}_id"])
-  end
-
-  def next_ballot_id
-    Ballot.exists?(id: @ballot.id + 1) ? (@ballot.id + 1) : Ballot.first.id
   end
 end

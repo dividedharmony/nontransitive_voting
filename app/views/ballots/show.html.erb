@@ -4,7 +4,7 @@
 
 <%= @ballot.candidate_a %>
 
-<%= form_tag vote_candidate_a_url(@ballot.id) do %>
+<%= form_tag vote_candidate_url(@ballot.id, 'candidate_a') do %>
     <%= submit_tag "Vote for #{@ballot.candidate_a}" %>
 <% end %>
 
@@ -12,6 +12,6 @@
 
 <%= @ballot.candidate_b %>
 
-<%= form_tag vote_candidate_b_url(@ballot.id) do %>
+<%= form_tag vote_candidate_url(@ballot.id, 'candidate_b') do %>
     <%= submit_tag "Vote for #{@ballot.candidate_b}" %>
 <% end %>
