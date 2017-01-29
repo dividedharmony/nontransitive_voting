@@ -9,6 +9,10 @@ class Anime < ActiveRecord::Base
     Ballot.where(ballots_sql_statement, class_name: self.class.name, id: id)
   end
 
+  def to_s
+    title
+  end
+
   private
 
   def ballots_sql_statement

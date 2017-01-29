@@ -1,0 +1,17 @@
+<h1>Ballots#show</h1>
+
+<h2>Cast your vote for the following candidates:</h2>
+
+<%= @ballot.candidate_a %>
+
+<%= form_tag vote_candidate_a_url(@ballot.id) do %>
+    <%= submit_tag "Vote for #{@ballot.candidate_a}" %>
+<% end %>
+
+<h3>OR</h3>
+
+<%= @ballot.candidate_b %>
+
+<%= form_tag vote_candidate_b_url(@ballot.id) do %>
+    <%= submit_tag "Vote for #{@ballot.candidate_b}" %>
+<% end %>
