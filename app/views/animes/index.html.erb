@@ -1,0 +1,7 @@
+<h1>Anime#Index</h1>
+
+<ul>
+  <% @animes.each do |anime| %>
+    <%= content_tag(:li, "ID: #{anime.id}; Title: #{anime.title}") %>
+  <% end %>
+</ul>
