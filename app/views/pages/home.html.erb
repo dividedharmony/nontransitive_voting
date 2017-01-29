@@ -1,0 +1,9 @@
+<h1>Welcome to the Straight A Awards!</h1>
+
+<h3>
+  <%= link_to 'List of Animes', animes_url %>
+</h3>
+
+<h3>
+  <%= link_to 'Begin Voting', vote_on_ballot_url(Ballot.first.id) %>
+</h3>
