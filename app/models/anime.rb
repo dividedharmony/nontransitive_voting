@@ -2,6 +2,7 @@
 
 class Anime < ActiveRecord::Base
   has_many :votes, as: :selected
+  has_many :tallies, as: :candidate
 
   validates :title, presence: true
 

@@ -12,6 +12,14 @@ class Ballot < ActiveRecord::Base
     [candidate_a, candidate_b]
   end
 
+  def candidate_a_votes
+    @candidate_a_votes ||= votes.where(selected: candidate_a).count
+  end
+
+  def candidate_b_votes
+    @candidate_b_votes ||= votes.where(selected: candidate_b).count
+  end
+
   private
 
   def two_different_candidates
