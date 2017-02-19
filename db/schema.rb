@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219203947) do
+ActiveRecord::Schema.define(version: 20170219205858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 20170219203947) do
     t.datetime "updated_at",    null: false
   end
 
+  create_table "awards", force: :cascade do |t|
+    t.string   "title",          null: false
+    t.string   "candidate_type", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "ballots", force: :cascade do |t|
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
@@ -39,12 +46,14 @@ ActiveRecord::Schema.define(version: 20170219203947) do
   end
 
   create_table "candidates", force: :cascade do |t|
-    t.string   "source_type",      null: false
-    t.integer  "source_id",        null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "award_seasons_id", null: false
-    t.index ["award_seasons_id"], name: "index_candidates_on_award_seasons_id", using: :btree
+    t.string   "source_type",     null: false
+    t.integer  "source_id",       null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "award_season_id", null: false
+    t.integer  "award_id",        null: false
+    t.index ["award_id"], name: "index_candidates_on_award_id", using: :btree
+    t.index ["award_season_id"], name: "index_candidates_on_award_season_id", using: :btree
     t.index ["source_type", "source_id"], name: "index_candidates_on_source_type_and_source_id", using: :btree
   end
 

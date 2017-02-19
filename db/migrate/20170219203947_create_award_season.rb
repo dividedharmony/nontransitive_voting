@@ -10,6 +10,6 @@ class CreateAwardSeason < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_reference :candidates, :award_seasons, null: false
+    add_reference :candidates, :award_season, null: false
   end
 end
