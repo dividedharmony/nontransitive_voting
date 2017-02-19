@@ -25,9 +25,52 @@ RSpec.describe Ballot do
     end
 
     context 'if both candidate_a and candidate_b are given' do
-      subject(:ballot) { Ballot.new(candidate_a: create(:candidate), candidate_b: create(:candidate)) }
+      subject(:ballot) { Ballot.new(candidate_a: candidate_a, candidate_b: candidate_b) }
 
-      it { is_expected.to be_valid }
+      context 'if candidate_a and candidate_b are the same' do
+        let(:candidate_a) { create(:candidate) }
+        let(:candidate_b) { candidate_a }
+
+        it 'is not valid' do
+          expect(ballot).not_to be_valid
+          expect(ballot.errors.messages).to include(candidate_b: ["can't be the same as candidate_a"])
+        end
+      end
+
+      context 'if candidate_a and candidate_b are vying for different awards' do
+        let(:award_a) { create(:award) }
+        let(:award_b) { create(:award) }
+        let(:award_season) { create(:award_season) }
+        let(:candidate_a) { create(:candidate, award: award_a, award_season: award_season) }
+        let(:candidate_b) { create(:candidate, award: award_b, award_season: award_season) }
+
+        it 'is not valid' do
+          expect(ballot).not_to be_valid
+          expect(ballot.errors.messages).to include(candidate_b: ['must be vying for the same award as candidate_a'])
+        end
+      end
+
+      context 'if candidate_a and candidate_b are from separate award seasons' do
+        let(:award) { create(:award) }
+        let(:award_season_a) { create(:award_season) }
+        let(:award_season_b) { create(:award_season) }
+        let(:candidate_a) { create(:candidate, award: award, award_season: award_season_a) }
+        let(:candidate_b) { create(:candidate, award: award, award_season: award_season_b) }
+
+        it 'is not valid' do
+          expect(ballot).not_to be_valid
+          expect(ballot.errors.messages).to include(candidate_b: ['must be in the same award season as candidate_a'])
+        end
+      end
+
+      context 'if candidate_a and candidate_b are different but are going for the same award in the same season' do
+        let(:award) { create(:award) }
+        let(:award_season) { create(:award_season) }
+        let(:candidate_a) { create(:candidate, award: award, award_season: award_season) }
+        let(:candidate_b) { create(:candidate, award: award, award_season: award_season) }
+
+        it { is_expected.to be_valid }
+      end
     end
 
     context 'if candidate_a and candidate_b are the same' do
@@ -42,7 +85,7 @@ RSpec.describe Ballot do
   end
 
   describe '.with_candidate' do
-    let!(:candidate) { create(:candidate) }
+    let!(:candidate) { create(:candidate, :ballot_friendly) }
 
     subject(:with_candidate) { Ballot.with_candidate(candidate) }
 
@@ -71,8 +114,8 @@ RSpec.describe Ballot do
   end
 
   describe '.already_created?' do
-    let!(:candidate1) { create(:candidate) }
-    let!(:candidate2) { create(:candidate) }
+    let!(:candidate1) { create(:candidate, :ballot_friendly) }
+    let!(:candidate2) { create(:candidate, :ballot_friendly) }
 
     subject(:already_created?) { Ballot.already_created?(candidate1, candidate2) }
 
@@ -118,8 +161,8 @@ RSpec.describe Ballot do
   end
 
   describe '#candidates' do
-    let(:candidate_a) { create(:candidate) }
-    let(:candidate_b) { create(:candidate) }
+    let(:candidate_a) { create(:candidate, :ballot_friendly) }
+    let(:candidate_b) { create(:candidate, :ballot_friendly) }
     let(:ballot) { create(:ballot, candidate_a: candidate_a, candidate_b: candidate_b) }
 
     subject(:candidates) { ballot.candidates }

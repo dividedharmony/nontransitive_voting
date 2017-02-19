@@ -6,9 +6,9 @@ class Ballot < ActiveRecord::Base
   has_many :votes
 
   scope :with_candidate, -> (candidate) { where('candidate_a_id = :candidate_id OR candidate_b_id = :candidate_id', candidate_id: candidate.id) }
-  scope :with_candidates, -> (candidate1, candidate2) { find_by }
 
   validate :two_different_candidates
+  validate :candidates_are_competing
 
   class << self
     def already_created?(candidate1, candidate2)
@@ -36,5 +36,11 @@ class Ballot < ActiveRecord::Base
   def two_different_candidates
     return if candidate_a.nil? || candidate_b.nil?
     errors.add(:candidate_b, "can't be the same as candidate_a") if candidate_a == candidate_b
+  end
+
+  def candidates_are_competing
+    return if candidate_a.nil? || candidate_b.nil?
+    errors.add(:candidate_b, 'must be vying for the same award as candidate_a') if candidate_a.award_id != candidate_b.award_id
+    errors.add(:candidate_b, 'must be in the same award season as candidate_a') if candidate_a.award_season_id != candidate_b.award_season_id
   end
 end

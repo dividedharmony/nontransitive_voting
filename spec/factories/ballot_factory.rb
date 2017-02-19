@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :ballot do
-    candidate_a
-    candidate_b
+    association :candidate_a, factory: [:candidate, :ballot_friendly]
+    association :candidate_b, factory: [:candidate, :ballot_friendly]
   end
 end
