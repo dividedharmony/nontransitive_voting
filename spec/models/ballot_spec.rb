@@ -70,6 +70,53 @@ RSpec.describe Ballot do
     end
   end
 
+  describe '.already_created?' do
+    let!(:candidate1) { create(:candidate) }
+    let!(:candidate2) { create(:candidate) }
+
+    subject(:already_created?) { Ballot.already_created?(candidate1, candidate2) }
+
+    context 'a ballot exists with candidate1 as candidate_a and candidate2 as candidate_b' do
+      before do
+        create(:ballot, candidate_a: candidate1, candidate_b: candidate2)
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'a ballot exists with candidate1 as candidate_a and candidate2 as candidate_b' do
+      before do
+        create(:ballot, candidate_a: candidate2, candidate_b: candidate1)
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'a ballot exists with candidate1 as candidate_a but not candidate2 as candidate_b' do
+      before do
+        create(:ballot, candidate_a: candidate1)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'a ballot exists with candidate2 as candidate_b but not candidate1 as candidate_a' do
+      before do
+        create(:ballot, candidate_b: candidate2)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'a ballot does exist with either candidate' do
+      before do
+        create(:ballot)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe '#candidates' do
     let(:candidate_a) { create(:candidate) }
     let(:candidate_b) { create(:candidate) }

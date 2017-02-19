@@ -6,8 +6,18 @@ class Ballot < ActiveRecord::Base
   has_many :votes
 
   scope :with_candidate, -> (candidate) { where('candidate_a_id = :candidate_id OR candidate_b_id = :candidate_id', candidate_id: candidate.id) }
+  scope :with_candidates, -> (candidate1, candidate2) { find_by }
 
   validate :two_different_candidates
+
+  class << self
+    def already_created?(candidate1, candidate2)
+      where('(candidate_a_id = :candidate1_id OR candidate_b_id = :candidate1_id) AND (candidate_a_id = :candidate2_id OR candidate_b_id = :candidate2_id)',
+            candidate1_id: candidate1.id,
+            candidate2_id: candidate2.id).
+          exists?
+    end
+  end
 
   def candidates
     [candidate_a, candidate_b]

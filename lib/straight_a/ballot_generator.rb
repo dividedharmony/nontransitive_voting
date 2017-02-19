@@ -34,6 +34,7 @@ module StraightA
 
     def cycle_through_b_candidates(candidate_a)
       candidates.each do |candidate_b|
+        next if Ballot.already_created?(candidate_a, candidate_b)
         Ballot.create!(candidate_a: candidate_a, candidate_b: candidate_b)
       end
     end

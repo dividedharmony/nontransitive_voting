@@ -12,11 +12,23 @@ RSpec.describe StraightA::BallotGenerator do
 
     subject(:generate_ballots) { described_class.new(award, award_season).generate_ballots }
 
-    it 'generates ballots for all combinations of 2 of the given candidates' do
-      expect { generate_ballots }.to change { Ballot.count }.from(0).to(3)
-      expect(Ballot.with_candidate(candidate1).count).to eq 2
-      expect(Ballot.with_candidate(candidate2).count).to eq 2
-      expect(Ballot.with_candidate(candidate3).count).to eq 2
+    context 'if no Ballots have already been created' do
+      it 'generates ballots for all combinations of 2 of the given candidates' do
+        expect { generate_ballots }.to change { Ballot.count }.from(0).to(3)
+        expect(Ballot.with_candidate(candidate1).count).to eq 2
+        expect(Ballot.with_candidate(candidate2).count).to eq 2
+        expect(Ballot.with_candidate(candidate3).count).to eq 2
+      end
+    end
+
+    context 'if Ballots have already been created for these candidates' do
+      before do
+        StraightA::BallotGenerator.new(award, award_season).generate_ballots
+      end
+
+      it 'creates no duplicate ballots' do
+        expect { generate_ballots }.not_to change { Ballot.count }.from(3)
+      end
     end
   end
 end
