@@ -41,6 +41,35 @@ RSpec.describe Ballot do
     end
   end
 
+  describe '.with_candidate' do
+    let!(:candidate) { create(:candidate) }
+
+    subject(:with_candidate) { Ballot.with_candidate(candidate) }
+
+    context 'no ballots have given candidate' do
+      it { is_expected.to be_empty }
+    end
+
+    context 'ballots have given candidate as candidate_a' do
+      let!(:ballot) { create(:ballot, candidate_a: candidate) }
+
+      it { is_expected.to include ballot }
+    end
+
+    context 'ballots have given candidate as candidate_b' do
+      let!(:ballot) { create(:ballot, candidate_b: candidate) }
+
+      it { is_expected.to include ballot }
+    end
+
+    context 'ballots have given candidate as candidate_a and candidate_b' do
+      let!(:ballot1) { create(:ballot, candidate_a: candidate) }
+      let!(:ballot2) { create(:ballot, candidate_b: candidate) }
+
+      it { is_expected.to include ballot1, ballot2 }
+    end
+  end
+
   describe '#candidates' do
     let(:candidate_a) { create(:candidate) }
     let(:candidate_b) { create(:candidate) }

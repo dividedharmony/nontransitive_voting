@@ -2,7 +2,7 @@
 
 class Vote < ActiveRecord::Base
   belongs_to :ballot
-  belongs_to :selected, polymorphic: true, optional: true
+  belongs_to :selected, class_name: 'Candidate', optional: true
 
   validates :ballot_id, presence: true
   validate :selected_is_an_option

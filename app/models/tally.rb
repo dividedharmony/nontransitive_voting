@@ -1,5 +1,5 @@
 class Tally < ActiveRecord::Base
-  belongs_to :candidate, polymorphic: true
+  belongs_to :candidate
 
   validates :win_count, numericality: { greater_than_or_equal_to: 0 }
 

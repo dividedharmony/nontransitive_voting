@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130014739) do
+ActiveRecord::Schema.define(version: 20170219193320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,32 +22,36 @@ ActiveRecord::Schema.define(version: 20170130014739) do
   end
 
   create_table "ballots", force: :cascade do |t|
-    t.string   "candidate_a_type", null: false
-    t.integer  "candidate_a_id",   null: false
-    t.string   "candidate_b_type", null: false
-    t.integer  "candidate_b_id",   null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["candidate_a_type", "candidate_a_id"], name: "index_ballots_on_candidate_a_type_and_candidate_a_id", using: :btree
-    t.index ["candidate_b_type", "candidate_b_id"], name: "index_ballots_on_candidate_b_type_and_candidate_b_id", using: :btree
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "candidate_a_id", null: false
+    t.integer  "candidate_b_id", null: false
+    t.index ["candidate_a_id"], name: "index_ballots_on_candidate_a_id", using: :btree
+    t.index ["candidate_b_id"], name: "index_ballots_on_candidate_b_id", using: :btree
+  end
+
+  create_table "candidates", force: :cascade do |t|
+    t.string   "source_type", null: false
+    t.integer  "source_id",   null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["source_type", "source_id"], name: "index_candidates_on_source_type_and_source_id", using: :btree
   end
 
   create_table "tallies", force: :cascade do |t|
-    t.string   "candidate_type", null: false
-    t.integer  "candidate_id",   null: false
     t.integer  "win_count"
     t.datetime "created_at"
-    t.index ["candidate_type", "candidate_id"], name: "index_tallies_on_candidate_type_and_candidate_id", using: :btree
+    t.integer  "candidate_id", null: false
+    t.index ["candidate_id"], name: "index_tallies_on_candidate_id", using: :btree
   end
 
   create_table "votes", force: :cascade do |t|
-    t.integer  "ballot_id",     null: false
-    t.string   "selected_type"
+    t.integer  "ballot_id",   null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "selected_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
     t.index ["ballot_id"], name: "index_votes_on_ballot_id", using: :btree
-    t.index ["selected_type", "selected_id"], name: "index_votes_on_selected_type_and_selected_id", using: :btree
+    t.index ["selected_id"], name: "index_votes_on_selected_id", using: :btree
   end
 
 end

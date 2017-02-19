@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class Ballot < ActiveRecord::Base
-  belongs_to :candidate_a, polymorphic: true
-  belongs_to :candidate_b, polymorphic: true
+  belongs_to :candidate_a, class_name: 'Candidate'
+  belongs_to :candidate_b, class_name: 'Candidate'
   has_many :votes
 
-  validates :candidate_a_id, :candidate_a_type, :candidate_b_id, :candidate_b_type, presence: true
+  scope :with_candidate, -> (candidate) { where('candidate_a_id = :candidate_id OR candidate_b_id = :candidate_id', candidate_id: candidate.id) }
+
   validate :two_different_candidates
 
   def candidates

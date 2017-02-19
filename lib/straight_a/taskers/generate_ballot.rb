@@ -3,11 +3,11 @@
 module StraightA
   module Taskers
     class GenerateBallot
-      attr_reader :animes
+      attr_reader :candidates
 
-      # @param animes [AnimeCollectionProxy] - eligible animes you want to have ballots generated for
-      def initialize(animes)
-        @animes = animes.to_a
+      # @param candidates [CandidateCollectionProxy] - eligible candidates you want to have ballots generated for
+      def initialize(candidates)
+        @candidates = candidates.to_a
       end
 
       def generate_ballots
@@ -19,21 +19,21 @@ module StraightA
       private
 
       def cycle_gracefully
-        Anime.transaction do
-          cycle_through_animes
+        Candidate.transaction do
+          cycle_through_candidates
         end
       end
 
-      def cycle_through_animes
+      def cycle_through_candidates
         loop do
-          candidate_a = animes.pop
-          break if animes.empty?
+          candidate_a = candidates.pop
+          break if candidates.empty?
           cycle_through_b_candidates(candidate_a)
         end
       end
 
       def cycle_through_b_candidates(candidate_a)
-        animes.each do |candidate_b|
+        candidates.each do |candidate_b|
           Ballot.create!(candidate_a: candidate_a, candidate_b: candidate_b)
         end
       end
