@@ -33,4 +33,20 @@ RSpec.describe Award do
 
     it { is_expected.to include best_animated, best_written }
   end
+
+  describe '#ballots' do
+    let!(:award) { create(:award) }
+    let!(:award_season) { create(:award_season) }
+    let!(:candidate1) { create(:candidate, award: award, award_season: award_season) }
+    let!(:candidate2) { create(:candidate, award: award, award_season: award_season) }
+    let!(:candidate3) { create(:candidate, award: award, award_season: award_season) }
+
+    before do
+      StraightA::BallotGenerator.new(award, award_season).generate_ballots
+    end
+
+    it 'has ballots' do
+      expect(award.ballots.count).to eq 3
+    end
+  end
 end
