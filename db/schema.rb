@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219193320) do
+ActiveRecord::Schema.define(version: 20170219203947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(version: 20170219193320) do
     t.string   "title",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "award_seasons", force: :cascade do |t|
+    t.string   "name",          null: false
+    t.datetime "voting_starts", null: false
+    t.datetime "voting_ends",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "ballots", force: :cascade do |t|
@@ -31,10 +39,12 @@ ActiveRecord::Schema.define(version: 20170219193320) do
   end
 
   create_table "candidates", force: :cascade do |t|
-    t.string   "source_type", null: false
-    t.integer  "source_id",   null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "source_type",      null: false
+    t.integer  "source_id",        null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "award_seasons_id", null: false
+    t.index ["award_seasons_id"], name: "index_candidates_on_award_seasons_id", using: :btree
     t.index ["source_type", "source_id"], name: "index_candidates_on_source_type_and_source_id", using: :btree
   end
 
