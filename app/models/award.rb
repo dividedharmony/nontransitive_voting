@@ -11,6 +11,11 @@ class Award < ActiveRecord::Base
     award_category.candidate_type == candidate_source.class.name
   end
 
+  def ballots
+    return [] unless candidates.any?
+    Ballot.where('candidate_a_id IN (:candidate_ids) OR candidate_b_id IN (:candidate_ids)', candidate_ids: candidates.pluck(:id)).distinct
+  end
+
   private
 
   def prepopulate_voting_open

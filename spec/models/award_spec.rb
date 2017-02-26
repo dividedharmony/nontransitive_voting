@@ -73,4 +73,27 @@ RSpec.describe Award do
       it { is_expected.to be true }
     end
   end
+
+  describe '#ballots' do
+    let!(:award) { create(:award) }
+    let!(:candidate_a) { create(:candidate, award: award_of_ballot) }
+    let!(:candidate_b) { create(:candidate, award: award_of_ballot) }
+    let!(:ballot) { create(:ballot, candidate_a: candidate_a, candidate_b: candidate_b) }
+
+    subject(:ballots) { award.ballots }
+
+    context 'if the candidates of a ballot belongs to the award' do
+      # match candidate award to the award of the subject line
+      let(:award_of_ballot) { award }
+
+      it { is_expected.to contain_exactly(ballot) }
+    end
+
+    context 'if neither candidates belong to the award' do
+      # create another award to be the award associated with the candidates
+      let(:award_of_ballot) { create(:award) }
+
+      it { is_expected.not_to include ballot }
+    end
+  end
 end
