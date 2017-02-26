@@ -29,11 +29,11 @@ ActiveRecord::Schema.define(version: 20170226171903) do
   end
 
   create_table "award_seasons", force: :cascade do |t|
-    t.string   "name",          null: false
-    t.datetime "voting_starts", null: false
-    t.datetime "voting_ends",   null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "name",             null: false
+    t.datetime "voting_starts_at", null: false
+    t.datetime "voting_ends_at",   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "awards", force: :cascade do |t|

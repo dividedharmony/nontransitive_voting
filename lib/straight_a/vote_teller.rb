@@ -4,9 +4,9 @@ module StraightA
   class TallyResults
     attr_reader :candidates, :ballots, :tallies
 
-    def initialize(award, award_season)
-      @candidates = Candidate.where(award: award, award_season: award_season)
-      @ballots = Ballot.open_ballots(award, award_season)
+    def initialize(award)
+      @candidates = Award.candidates
+      @ballots = Ballot.where(award: award)
       @tallies = Hash[candidates.map { |candidate| [candidate.id, Tally.new(candidate)] }]
     end
 
@@ -22,8 +22,7 @@ module StraightA
     def tally_votes!
       ballots.each do |ballot|
         tally_specific_ballot(ballot)
-        # TODO: change this to tallying votes
-        # ballot.update!(tallied: true)
+        ballot.votes.decided.update_all!(tallied: true)
       end
     end
 
