@@ -5,6 +5,8 @@ class Vote < ActiveRecord::Base
   belongs_to :selected, class_name: 'Candidate', optional: true
   has_one :award, through: :ballot
 
+  scope :decided, -> { where.not(selected: nil) }
+
   validates :ballot_id, presence: true
   validate :selected_is_an_option
 

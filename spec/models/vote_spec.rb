@@ -58,4 +58,24 @@ RSpec.describe Vote do
       expect(vote.award).to eq award
     end
   end
+
+  describe '.decided' do
+    let(:candidate) { create(:candidate, :ballot_friendly) }
+    let(:ballot) { create(:ballot, candidate_a: candidate) }
+    let(:vote) { create(:vote, ballot: ballot, selected: selected_candidate) }
+
+    subject(:decided) { Vote.decided }
+
+    context 'if a vote has no selected candidate' do
+      let(:selected_candidate) { nil }
+
+      it { is_expected.not_to include vote }
+    end
+
+    context 'if a vote has a selected candidate' do
+      let(:selected_candidate) { candidate }
+
+      it { is_expected.to include vote }
+    end
+  end
 end
