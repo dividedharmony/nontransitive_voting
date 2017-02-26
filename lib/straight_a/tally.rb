@@ -2,6 +2,9 @@
 
 module StraightA
   class Tally
+    WIN_INCREMENT = 2
+    TIE_INCREMENT = 1
+
     attr_reader :candidate, :vote_count
 
     def initialize(candidate)
@@ -10,11 +13,11 @@ module StraightA
     end
 
     def win_inc
-      @vote_count += 2
+      @vote_count += WIN_INCREMENT
     end
 
     def tie_inc
-      @vote_count += 1
+      @vote_count += TIE_INCREMENT
     end
 
     def save_to_candidate!

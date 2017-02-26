@@ -39,19 +39,19 @@ RSpec.describe Award do
     subject(:award) { Award.create!(award_category: award_category, award_season: award_season) }
 
     context 'if award_season is not yet open' do
-      let(:award_season) { create(:award_season, voting_starts_at: 1.week.from_now, voting_ends_at: 2.weeks.from_now) }
+      let(:award_season) { create(:award_season, :not_yet_open) }
 
       it { is_expected.not_to be_voting_open }
     end
 
     context 'if award_season has already closed' do
-      let(:award_season) { create(:award_season, voting_starts_at: 2.weeks.ago, voting_ends_at: 1.week.ago) }
+      let(:award_season) { create(:award_season, :closed) }
 
       it { is_expected.not_to be_voting_open }
     end
 
     context 'if award_season is open' do
-      let(:award_season) { create(:award_season, voting_starts_at: 1.week.ago, voting_ends_at: 1.week.from_now) }
+      let(:award_season) { create(:award_season) }
 
       it { is_expected.to be_voting_open }
     end

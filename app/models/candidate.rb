@@ -2,12 +2,14 @@
 
 class Candidate < ActiveRecord::Base
   belongs_to :source, polymorphic: true
-  belongs_to :award
+  belongs_to :award, inverse_of: :candidates
   has_many :ballots, as: :candidate_a
   has_many :ballots, as: :candidate_b
   has_many :votes, as: :selected
 
   validate :source_is_eligible_for_award
+
+  delegate :to_s, to: :source
 
   private
 

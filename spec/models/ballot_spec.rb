@@ -156,4 +156,80 @@ RSpec.describe Ballot do
 
     it { is_expected.to match_array [candidate_a, candidate_b] }
   end
+
+  describe '#candidate_a_votes' do
+    let(:ballot) { create(:ballot) }
+
+    subject(:candidate_a_votes) { ballot.candidate_a_votes }
+
+    context 'if votes are undecided' do
+      before do
+        create(:vote, ballot: ballot, selected: nil)
+      end
+
+      it { is_expected.to eq 0 }
+    end
+
+    context 'if votes are already tallied' do
+      before do
+        create(:vote, ballot: ballot, selected: ballot.candidate_a, tallied: true)
+      end
+
+      it { is_expected.to eq 0 }
+    end
+
+    context 'if vote are for candidate_b' do
+      before do
+        create(:vote, ballot: ballot, selected: ballot.candidate_b)
+      end
+
+      it { is_expected.to eq 0 }
+    end
+
+    context 'if vote are for candidate_a and have not yet been tallied' do
+      before do
+        create(:vote, ballot: ballot, selected: ballot.candidate_a)
+      end
+
+      it { is_expected.to eq 1 }
+    end
+  end
+
+  describe '#candidate_b_votes' do
+    let(:ballot) { create(:ballot) }
+
+    subject(:candidate_b_votes) { ballot.candidate_b_votes }
+
+    context 'if votes are undecided' do
+      before do
+        create(:vote, ballot: ballot, selected: nil)
+      end
+
+      it { is_expected.to eq 0 }
+    end
+
+    context 'if votes are already tallied' do
+      before do
+        create(:vote, ballot: ballot, selected: ballot.candidate_b, tallied: true)
+      end
+
+      it { is_expected.to eq 0 }
+    end
+
+    context 'if vote are for candidate_a' do
+      before do
+        create(:vote, ballot: ballot, selected: ballot.candidate_a)
+      end
+
+      it { is_expected.to eq 0 }
+    end
+
+    context 'if vote are for candidate_a and have not yet been tallied' do
+      before do
+        create(:vote, ballot: ballot, selected: ballot.candidate_b)
+      end
+
+      it { is_expected.to eq 1 }
+    end
+  end
 end

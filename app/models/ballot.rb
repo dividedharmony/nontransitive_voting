@@ -4,7 +4,7 @@ class Ballot < ActiveRecord::Base
   belongs_to :candidate_a, class_name: 'Candidate'
   belongs_to :candidate_b, class_name: 'Candidate'
   has_many :votes
-  has_one :award, through: :candidate_a
+  has_one :award, through: :candidate_a, inverse_of: :ballots
 
   scope :with_candidate, -> (candidate) { where('candidate_a_id = :candidate_id OR candidate_b_id = :candidate_id', candidate_id: candidate.id) }
 
@@ -25,11 +25,11 @@ class Ballot < ActiveRecord::Base
   end
 
   def candidate_a_votes
-    @candidate_a_votes ||= votes.where(selected: candidate_a).count
+    @candidate_a_votes ||= votes.untallied.where(selected: candidate_a).count
   end
 
   def candidate_b_votes
-    @candidate_b_votes ||= votes.where(selected: candidate_b).count
+    @candidate_b_votes ||= votes.untallied.where(selected: candidate_b).count
   end
 
   private

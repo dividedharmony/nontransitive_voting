@@ -6,6 +6,7 @@ class Vote < ActiveRecord::Base
   has_one :award, through: :ballot
 
   scope :decided, -> { where.not(selected: nil) }
+  scope :untallied, -> { where(tallied: false) }
 
   validates :ballot_id, presence: true
   validate :selected_is_an_option

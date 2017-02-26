@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AwardCategory < ActiveRecord::Base
-  has_many :awards
+  has_many :awards, inverse_of: :award_category
   has_many :award_seasons, through: :awards
   has_many :candidates, through: :awards
 

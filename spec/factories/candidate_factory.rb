@@ -12,5 +12,9 @@ FactoryGirl.define do
       source { Anime.find_or_create_by!(title: 'One Piece') }
       award { Award.first || create(:award) }
     end
+
+    trait :winner do
+      won true
+    end
   end
 end

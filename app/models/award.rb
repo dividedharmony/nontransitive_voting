@@ -16,6 +16,14 @@ class Award < ActiveRecord::Base
     Ballot.where('candidate_a_id IN (:candidate_ids) OR candidate_b_id IN (:candidate_ids)', candidate_ids: candidates.pluck(:id)).distinct
   end
 
+  def to_s
+    "#{award_category.title} for #{award_season.name}"
+  end
+
+  def winners
+    candidates.where(won: true)
+  end
+
   private
 
   def prepopulate_voting_open
