@@ -5,12 +5,11 @@ require 'spec_helper'
 RSpec.describe StraightA::BallotGenerator do
   describe '#generate_ballots' do
     let!(:award) { create(:award) }
-    let!(:award_season) { create(:award_season) }
-    let!(:candidate1) { create(:candidate, award: award, award_season: award_season) }
-    let!(:candidate2) { create(:candidate, award: award, award_season: award_season) }
-    let!(:candidate3) { create(:candidate, award: award, award_season: award_season) }
+    let!(:candidate1) { create(:candidate, award: award) }
+    let!(:candidate2) { create(:candidate, award: award) }
+    let!(:candidate3) { create(:candidate, award: award) }
 
-    subject(:generate_ballots) { described_class.new(award, award_season).generate_ballots }
+    subject(:generate_ballots) { described_class.new(award).generate_ballots }
 
     context 'if no Ballots have already been created' do
       it 'generates ballots for all combinations of 2 of the given candidates' do
@@ -23,7 +22,7 @@ RSpec.describe StraightA::BallotGenerator do
 
     context 'if Ballots have already been created for these candidates' do
       before do
-        StraightA::BallotGenerator.new(award, award_season).generate_ballots
+        StraightA::BallotGenerator.new(award).generate_ballots
       end
 
       it 'creates no duplicate ballots' do

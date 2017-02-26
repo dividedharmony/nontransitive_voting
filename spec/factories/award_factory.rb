@@ -2,7 +2,8 @@
 
 FactoryGirl.define do
   factory :award do
-    title 'Anime of the Year'
-    candidate_type 'Anime'
+    award_category
+    award_season
+    voting_closed false
   end
 end

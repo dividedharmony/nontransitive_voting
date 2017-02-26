@@ -4,49 +4,50 @@ require 'spec_helper'
 
 RSpec.describe Award do
   describe 'validations' do
-    subject(:award) { Award.new(title: title, candidate_type: candidate_type) }
+    subject(:award) { Award.new(award_season: award_season, award_category: award_category) }
 
-    context 'with title and candidate_type' do
-      let(:title) { 'Best in Show' }
-      let(:candidate_type) { 'Dog' }
-
-      it { is_expected.to be_valid }
-    end
-
-    context 'without title nor candidate_type' do
-      let(:title) { nil }
-      let(:candidate_type) { nil }
+    context 'if an award has no award_category' do
+      let(:award_season) { create(:award_season) }
+      let(:award_category) { nil }
 
       it 'is not valid' do
         expect(award).not_to be_valid
-        expect(award.errors.messages).to include(title: ["can't be blank"], candidate_type: ["can't be blank"])
+        expect(award.errors.messages).to include award_category: ['must exist']
       end
     end
-  end
 
-  describe '.eligible' do
-    let!(:anime) { create(:anime) }
-    let!(:best_animated) { create(:award, candidate_type: 'Anime') }
-    let!(:best_written) { create(:award, candidate_type: 'Anime') }
+    context 'if an award has no award_season' do
+      let(:award_season) { nil }
+      let(:award_category) { create(:award_category) }
 
-    subject(:eligible) { Award.eligible(anime) }
-
-    it { is_expected.to include best_animated, best_written }
-  end
-
-  describe '#ballots' do
-    let!(:award) { create(:award) }
-    let!(:award_season) { create(:award_season) }
-    let!(:candidate1) { create(:candidate, award: award, award_season: award_season) }
-    let!(:candidate2) { create(:candidate, award: award, award_season: award_season) }
-    let!(:candidate3) { create(:candidate, award: award, award_season: award_season) }
-
-    before do
-      StraightA::BallotGenerator.new(award, award_season).generate_ballots
+      it 'is not valid' do
+        expect(award).not_to be_valid
+        expect(award.errors.messages).to include award_season: ['must exist']
+      end
     end
 
-    it 'has ballots' do
-      expect(award.ballots.count).to eq 3
+    context 'if an award has both an award_category and an award_season' do
+      let(:award_season) { create(:award_season) }
+      let(:award_category) { create(:award_category) }
+
+      it { is_expected.to be_valid }
+    end
+  end
+
+  describe '#eligible?' do
+    let(:award) { create(:award, award_category: create(:award_category, candidate_type: 'Anime')) }
+    subject(:eligible?) { award.eligible?(candidate_source) }
+
+    context 'if the class of the given candidate_source does not match the candidate_type of the award_category' do
+      let(:candidate_source) { String.new }
+
+      it { is_expected.to be false }
+    end
+
+    context 'if the class of the given candidate_source matches the candidate_type of the award_category' do
+      let(:candidate_source) { create(:anime) }
+
+      it { is_expected.to be true }
     end
   end
 end

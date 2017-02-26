@@ -5,9 +5,8 @@ module StraightA
     attr_reader :candidates
 
     # @param award [Award]
-    # @param award_season [AwardSeason]
-    def initialize(award, award_season)
-      @candidates = Candidate.where(award: award, award_season: award_season).to_a
+    def initialize(award)
+      @candidates = Candidate.where(award: award).to_a
     end
 
     def generate_ballots
@@ -19,7 +18,7 @@ module StraightA
     private
 
     def cycle_gracefully
-      Candidate.transaction do
+      Ballot.transaction do
         cycle_through_candidates
       end
     end

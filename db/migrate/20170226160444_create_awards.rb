@@ -1,8 +1,10 @@
 class CreateAwards < ActiveRecord::Migration[5.0]
   def change
     create_table :awards do |t|
-      t.string :title, null: false
-      t.string :candidate_type, null: false
+      t.references :award_category, null: false
+      t.references :award_season, null: false
+
+      t.boolean :voting_closed, null: false, default: false
 
       t.timestamps
     end

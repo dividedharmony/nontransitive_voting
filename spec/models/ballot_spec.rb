@@ -41,8 +41,8 @@ RSpec.describe Ballot do
         let(:award_a) { create(:award) }
         let(:award_b) { create(:award) }
         let(:award_season) { create(:award_season) }
-        let(:candidate_a) { create(:candidate, award: award_a, award_season: award_season) }
-        let(:candidate_b) { create(:candidate, award: award_b, award_season: award_season) }
+        let(:candidate_a) { create(:candidate, award: award_a) }
+        let(:candidate_b) { create(:candidate, award: award_b) }
 
         it 'is not valid' do
           expect(ballot).not_to be_valid
@@ -50,24 +50,11 @@ RSpec.describe Ballot do
         end
       end
 
-      context 'if candidate_a and candidate_b are from separate award seasons' do
-        let(:award) { create(:award) }
-        let(:award_season_a) { create(:award_season) }
-        let(:award_season_b) { create(:award_season) }
-        let(:candidate_a) { create(:candidate, award: award, award_season: award_season_a) }
-        let(:candidate_b) { create(:candidate, award: award, award_season: award_season_b) }
-
-        it 'is not valid' do
-          expect(ballot).not_to be_valid
-          expect(ballot.errors.messages).to include(candidate_b: ['must be in the same award season as candidate_a'])
-        end
-      end
-
-      context 'if candidate_a and candidate_b are different but are going for the same award in the same season' do
+      context 'if candidate_a and candidate_b are different but are going for the same award' do
         let(:award) { create(:award) }
         let(:award_season) { create(:award_season) }
-        let(:candidate_a) { create(:candidate, award: award, award_season: award_season) }
-        let(:candidate_b) { create(:candidate, award: award, award_season: award_season) }
+        let(:candidate_a) { create(:candidate, award: award) }
+        let(:candidate_b) { create(:candidate, award: award) }
 
         it { is_expected.to be_valid }
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219205858) do
+ActiveRecord::Schema.define(version: 20170226160444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 20170219205858) do
     t.string   "title",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "award_categories", force: :cascade do |t|
+    t.string   "title",          null: false
+    t.string   "candidate_type", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "award_seasons", force: :cascade do |t|
@@ -30,10 +37,13 @@ ActiveRecord::Schema.define(version: 20170219205858) do
   end
 
   create_table "awards", force: :cascade do |t|
-    t.string   "title",          null: false
-    t.string   "candidate_type", null: false
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "award_category_id",                 null: false
+    t.integer  "award_season_id",                   null: false
+    t.boolean  "voting_closed",     default: false, null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["award_category_id"], name: "index_awards_on_award_category_id", using: :btree
+    t.index ["award_season_id"], name: "index_awards_on_award_season_id", using: :btree
   end
 
   create_table "ballots", force: :cascade do |t|
@@ -46,22 +56,15 @@ ActiveRecord::Schema.define(version: 20170219205858) do
   end
 
   create_table "candidates", force: :cascade do |t|
-    t.string   "source_type",     null: false
-    t.integer  "source_id",       null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "award_season_id", null: false
-    t.integer  "award_id",        null: false
+    t.string   "source_type",                 null: false
+    t.integer  "source_id",                   null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "vote_count",  default: 0,     null: false
+    t.boolean  "won",         default: false, null: false
+    t.integer  "award_id",                    null: false
     t.index ["award_id"], name: "index_candidates_on_award_id", using: :btree
-    t.index ["award_season_id"], name: "index_candidates_on_award_season_id", using: :btree
     t.index ["source_type", "source_id"], name: "index_candidates_on_source_type_and_source_id", using: :btree
-  end
-
-  create_table "tallies", force: :cascade do |t|
-    t.integer  "win_count"
-    t.datetime "created_at"
-    t.integer  "candidate_id", null: false
-    t.index ["candidate_id"], name: "index_tallies_on_candidate_id", using: :btree
   end
 
   create_table "votes", force: :cascade do |t|

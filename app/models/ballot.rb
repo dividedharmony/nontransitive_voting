@@ -41,6 +41,5 @@ class Ballot < ActiveRecord::Base
   def candidates_are_competing
     return if candidate_a.nil? || candidate_b.nil?
     errors.add(:candidate_b, 'must be vying for the same award as candidate_a') if candidate_a.award_id != candidate_b.award_id
-    errors.add(:candidate_b, 'must be in the same award season as candidate_a') if candidate_a.award_season_id != candidate_b.award_season_id
   end
 end
