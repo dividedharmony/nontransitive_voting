@@ -2,6 +2,8 @@
 
 FactoryGirl.define do
   factory :anime, aliases: [:candidate_source] do
-    title 'Shingeki no Kyojin'
+    sequence :title do |n|
+      "#{n}th Punch Man"
+    end
   end
 end
