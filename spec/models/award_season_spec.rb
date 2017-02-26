@@ -36,4 +36,31 @@ RSpec.describe AwardSeason do
       it { is_expected.to be_valid }
     end
   end
+
+  describe '#open?' do
+    subject(:award_season) { create(:award_season, voting_starts_at: voting_starts_at, voting_ends_at: voting_ends_at) }
+
+    context 'voting_starts_at has not yet passed' do
+      let(:voting_starts_at) { 1.week.from_now }
+      let(:voting_ends_at) { 2.weeks.from_now }
+
+      it { is_expected.not_to be_open }
+    end
+
+    context 'voting_starts_at has passed' do
+      let(:voting_starts_at) { 1.month.ago }
+
+      context 'voting_ends_at has already passed' do
+        let(:voting_ends_at) { 1.week.ago }
+
+        it { is_expected.not_to be_open }
+      end
+
+      context 'voting_ends_at has not yet passed' do
+        let(:voting_ends_at) { 1.week.from_now }
+
+        it { is_expected.to be_open }
+      end
+    end
+  end
 end
