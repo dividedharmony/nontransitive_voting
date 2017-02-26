@@ -46,4 +46,16 @@ RSpec.describe Vote do
       it { is_expected.to be_valid }
     end
   end
+
+  describe 'associations' do
+    let(:award) { create(:award) }
+    let(:candidate_a) { create(:candidate, award: award) }
+    let(:candidate_b) { create(:candidate, award: award) }
+    let(:ballot) { create(:ballot, candidate_a: candidate_a, candidate_b: candidate_b) }
+    let(:vote) { create(:vote, ballot: ballot, selected: nil) }
+
+    it 'has an award' do
+      expect(vote.award).to eq award
+    end
+  end
 end

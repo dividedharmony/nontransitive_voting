@@ -3,6 +3,7 @@
 class Vote < ActiveRecord::Base
   belongs_to :ballot
   belongs_to :selected, class_name: 'Candidate', optional: true
+  has_one :award, through: :ballot
 
   validates :ballot_id, presence: true
   validate :selected_is_an_option

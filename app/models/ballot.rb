@@ -4,6 +4,7 @@ class Ballot < ActiveRecord::Base
   belongs_to :candidate_a, class_name: 'Candidate'
   belongs_to :candidate_b, class_name: 'Candidate'
   has_many :votes
+  has_one :award, through: :candidate_a
 
   scope :with_candidate, -> (candidate) { where('candidate_a_id = :candidate_id OR candidate_b_id = :candidate_id', candidate_id: candidate.id) }
 
