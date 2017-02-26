@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
 
-  resource :animes, only: [:new, :create, :show]
-  get 'animes/all', to: 'animes#index'
+  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
+    get '/admin' => "admin/dashboards#show", as: :admin_root
+  end
 
   get 'vote/:id', to: 'ballots#show', as: :vote_on_ballot
   post 'vote_candidate/:ballot_id/:a_or_b', to: 'ballots#vote_candidate', as: :vote_candidate
