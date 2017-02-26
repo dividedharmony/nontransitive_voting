@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20170226171903) do
   create_table "awards", force: :cascade do |t|
     t.integer  "award_category_id",                 null: false
     t.integer  "award_season_id",                   null: false
-    t.boolean  "voting_closed",     default: false, null: false
+    t.boolean  "voting_open",       default: false, null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.index ["award_category_id"], name: "index_awards_on_award_category_id", using: :btree

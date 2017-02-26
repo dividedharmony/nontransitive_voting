@@ -34,6 +34,29 @@ RSpec.describe Award do
     end
   end
 
+  describe '.create' do
+    let(:award_category) { create(:award_category) }
+    subject(:award) { Award.create!(award_category: award_category, award_season: award_season) }
+
+    context 'if award_season is not yet open' do
+      let(:award_season) { create(:award_season, voting_starts_at: 1.week.from_now, voting_ends_at: 2.weeks.from_now) }
+
+      it { is_expected.not_to be_voting_open }
+    end
+
+    context 'if award_season has already closed' do
+      let(:award_season) { create(:award_season, voting_starts_at: 2.weeks.ago, voting_ends_at: 1.week.ago) }
+
+      it { is_expected.not_to be_voting_open }
+    end
+
+    context 'if award_season is open' do
+      let(:award_season) { create(:award_season, voting_starts_at: 1.week.ago, voting_ends_at: 1.week.from_now) }
+
+      it { is_expected.to be_voting_open }
+    end
+  end
+
   describe '#eligible?' do
     let(:award) { create(:award, award_category: create(:award_category, candidate_type: 'Anime')) }
     subject(:eligible?) { award.eligible?(candidate_source) }
