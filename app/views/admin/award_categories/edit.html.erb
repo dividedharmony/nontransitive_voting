@@ -1,0 +1,9 @@
+<h1>Admin::AwardCategory#edit</h1>
+
+<h3>Created at: <%= @award_category.created_at %></h3>
+<h3>Updated at: <%= @award_category.updated_at %></h3>
+
+<%= form_for @award_category, method: :post, url: admin_update_award_category_path(@award_category)  do |f| %>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= f.submit 'Update Award Category' %>
+<% end %>

@@ -3,8 +3,15 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
 
-  constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
-    get '/admin' => "admin/dashboards#show", as: :admin_root
+  namespace :admin do
+    constraints Clearance::Constraints::SignedIn.new { |user| user.admin? } do
+      get '/' => 'dashboards#show', as: :admin_root
+
+      resource :award_categories, only: [:new, :create, :delete]
+      get 'award_categories' => 'award_categories#index', as: :index_award_categories
+      get 'award_categories/:id/edit' => 'award_categories#edit', as: :edit_award_category
+      post 'award_categories/:id/update' => 'award_categories#update', as: :update_award_category
+    end
   end
 
   get '/animes', to: 'animes#index', as: :index_animes

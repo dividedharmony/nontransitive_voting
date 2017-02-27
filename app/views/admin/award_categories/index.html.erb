@@ -1,0 +1,7 @@
+<h1>Admin::AwardCategory#index</h1>
+
+<ul>
+  <% @award_categories.each do |category| %>
+  <li><%= link_to(category.title, admin_edit_award_category_path(category)) %></li>
+  <% end %>
+</ul>

@@ -1,0 +1,6 @@
+<h1>Admin::AwardCategory#new</h1>
+
+<%= form_for @award_category, url: { action: :create } do |f| %>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= f.submit 'Create Award Category' %>
+<% end %>
