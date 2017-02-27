@@ -1,0 +1,9 @@
+<h1>Admin::Award#index</h1>
+
+<ul>
+  <% @awards.each do |award| %>
+    <li>
+      <%= link_to(award.to_s, admin_edit_award_path(award)) %>
+    </li>
+  <% end %>
+</ul>

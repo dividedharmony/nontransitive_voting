@@ -1,0 +1,8 @@
+<%# form for awards %>
+
+<%= f.label :award_category_id, 'Category for this Award' %>
+<%= f.select(:award_category_id, options_for_award_categories) %>
+<hr />
+<%= f.label :award_season_id, 'Voting Period for this Award' %>
+<%= f.select(:award_season_id, options_for_award_seasons) %>
+<hr />
