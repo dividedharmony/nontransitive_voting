@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get '/admin' => "admin/dashboards#show", as: :admin_root
   end
 
+  get '/animes', to: 'animes#index', as: :index_animes
   get 'vote/:id', to: 'ballots#show', as: :vote_on_ballot
   post 'vote_candidate/:ballot_id/:a_or_b', to: 'ballots#vote_candidate', as: :vote_candidate
 
