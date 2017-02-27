@@ -1,0 +1,14 @@
+<h1>Admin::User#new</h1>
+
+<div id="clearance" class="sign-up">
+  <h2><%= t(".title") %></h2>
+
+  <%= form_for @user, url: { action: :create } do |form| %>
+      <%= render partial: 'form', object: form %>
+
+      <div class="submit-field">
+        <%= form.submit %>
+      </div>
+  <% end %>
+</div>
+

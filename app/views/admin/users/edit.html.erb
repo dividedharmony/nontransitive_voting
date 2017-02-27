@@ -1,0 +1,16 @@
+<h1>Admin::User#edit</h1>
+
+<h3>Created at: <%= @user.created_at %></h3>
+<h3>Updated at: <%= @user.updated_at %></h3>
+
+<div id="clearance" class="sign-up">
+  <h2><%= t(".title") %></h2>
+
+  <%= form_for @user, method: :post, url: admin_update_user_path(@user) do |form| %>
+      <%= render partial: 'form', object: form %>
+
+      <div class="submit-field">
+        <%= form.submit %>
+      </div>
+  <% end %>
+</div>

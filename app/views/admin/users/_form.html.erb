@@ -1,0 +1,16 @@
+<%# form for users %>
+
+<div class="text-field">
+  <%= form.label :email %>
+  <%= form.text_field :email, type: 'email' %>
+</div>
+
+<div class="password-field">
+  <%= form.label :password %>
+  <%= form.password_field :password %>
+</div>
+
+<div class="admin-field">
+  <%= form.label :admin, 'Is this user an admin?' %>
+  <%= form.check_box(:admin, { class: 'admin-checkbox' }, 'yes', false) %>
+</div>

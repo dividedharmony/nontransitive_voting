@@ -21,6 +21,11 @@ Rails.application.routes.draw do
       get 'awards' => 'awards#index', as: :index_awards
       get 'awards/:id/edit' => 'awards#edit', as: :edit_award
       post 'awards/:id/update' => 'awards#update', as: :update_award
+
+      resource :users, only: [:new, :create, :delete]
+      get 'users' => 'users#index', as: :index_users
+      get 'users/:id/edit' => 'users#edit', as: :edit_user
+      post 'users/:id/update' => 'users#update', as: :update_user
     end
   end
 

@@ -2,6 +2,6 @@
 
 <ul>
   <% @award_seasons.each do |season| %>
-  <li><%= link_to(season.title, admin_edit_award_season_path(season)) %></li>
+  <li><%= link_to(season.name, admin_edit_award_season_path(season)) %></li>
   <% end %>
 </ul>
