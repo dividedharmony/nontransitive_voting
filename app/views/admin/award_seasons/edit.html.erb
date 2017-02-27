@@ -1,0 +1,9 @@
+<h1>Admin::Awardseason#edit</h1>
+
+<h3>Created at: <%= @award_season.created_at %></h3>
+<h3>Updated at: <%= @award_season.updated_at %></h3>
+
+<%= form_for @award_season, method: :post, url: admin_update_award_season_path(@award_season)  do |f| %>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= f.submit 'Update Award season' %>
+<% end %>

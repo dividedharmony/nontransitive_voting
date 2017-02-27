@@ -1,0 +1,6 @@
+<h1>Admin::Awardseason#new</h1>
+
+<%= form_for @award_season, url: { action: :create } do |f| %>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= f.submit 'Create Award season' %>
+<% end %>

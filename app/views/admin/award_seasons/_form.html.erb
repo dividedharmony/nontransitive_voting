@@ -1,0 +1,11 @@
+<%# form for award seasons %>
+
+<%= f.label :name, 'Name of Award Season' %>
+<%= f.text_field :name %>
+<hr />
+<%= f.label :voting_starts_at, 'When does voting begin?' %>
+<%= f.datetime_select(:voting_starts_at) %>
+<hr />
+<%= f.label :voting_starts_at, 'When does voting end?' %>
+<%= f.datetime_select(:voting_ends_at) %>
+<hr />

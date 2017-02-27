@@ -11,6 +11,11 @@ Rails.application.routes.draw do
       get 'award_categories' => 'award_categories#index', as: :index_award_categories
       get 'award_categories/:id/edit' => 'award_categories#edit', as: :edit_award_category
       post 'award_categories/:id/update' => 'award_categories#update', as: :update_award_category
+
+      resource :award_seasons, only: [:new, :create, :delete]
+      get 'award_seasons' => 'award_seasons#index', as: :index_award_seasons
+      get 'award_seasons/:id/edit' => 'award_seasons#edit', as: :edit_award_season
+      post 'award_seasons/:id/update' => 'award_seasons#update', as: :update_award_season
     end
   end
 
