@@ -39,6 +39,9 @@ gem 'clearance', '~> 1.16'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'awesome_print'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'byebug', platform: :mri
   gem 'factory_girl_rails', '~> 4.8.0'
   gem 'rspec-rails', '~> 3.5'
