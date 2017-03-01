@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'straight_a/formula/anime_edit'
+
 module Admin
   class AnimesController < ApplicationController
     include Admin::CandidatesHelper

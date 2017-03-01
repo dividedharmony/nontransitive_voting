@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'straight_a/operation/candidates/create'
+
 module Admin
   class CandidatesController < ApplicationController
     def create
