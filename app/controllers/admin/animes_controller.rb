@@ -2,6 +2,8 @@
 
 module Admin
   class AnimesController < ApplicationController
+    include Admin::CandidatesHelper
+
     def index
       @animes = Anime.all
     end
@@ -16,7 +18,7 @@ module Admin
     end
 
     def edit
-      @anime = Anime.find(params[:id])
+      form StraightA::Formula::AnimeEdit, failure: :no_anime_found
     end
 
     def update
@@ -26,6 +28,11 @@ module Admin
     end
 
     private
+
+    def no_anime_found
+      flash[:error] = 'Could not find anime'
+      redirect_to action: :index
+    end
 
     def anime_attr
       {

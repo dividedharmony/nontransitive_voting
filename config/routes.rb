@@ -31,6 +31,8 @@ Rails.application.routes.draw do
       get 'animes' => 'animes#index', as: :index_animes
       get 'animes/:id/edit' => 'animes#edit', as: :edit_anime
       post 'animes/:id/update' => 'animes#update', as: :update_anime
+
+      post 'candidates' => 'candidates#create', as: :create_candidate
     end
   end
 

@@ -1,9 +1,30 @@
 <h1>Admin::Anime#edit</h1>
 
-<h3>Created at: <%= @anime.created_at %></h3>
-<h3>Updated at: <%= @anime.updated_at %></h3>
+<h3>Created at: <%= @formula.anime.created_at %></h3>
+<h3>Updated at: <%= @formula.anime.updated_at %></h3>
 
-<%= form_for @anime, method: :post, url: admin_update_anime_path(@anime)  do |f| %>
+<%= form_for @formula.anime, method: :post, url: admin_update_anime_path(@formula.anime)  do |f| %>
     <%= render partial: 'form', locals: { f: f } %>
     <%= f.submit 'Update Anime' %>
 <% end %>
+
+<h3>Candidacies</h3>
+<ul>
+  <% @formula.candidates.each do |candidate| %>
+    <li>
+      <% if candidate.won %>
+          <%= "Won #{candidate.award.to_s}!" %>
+      <% else %>
+          <%= "Applied for #{candidate.award.to_s}" %>
+      <% end %>
+    </li>
+  <% end %>
+
+  <li>
+    <%= form_for @formula.candidate, method: :post, url: admin_create_candidate_path do |f| %>
+      <%= f.hidden_field :source_id, value: @formula.anime.id  %>
+      <%= f.select :award_id, options_for_candidates %>
+      <%= f.submit 'Apply for Candidacy' %>
+    <% end %>
+  </li>
+</ul>
