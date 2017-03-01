@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'straight_a'
+
 class ApplicationController < ActionController::Base
   include Clearance::Controller
   protect_from_forgery with: :exception
