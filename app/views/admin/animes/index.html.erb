@@ -1,0 +1,9 @@
+<h1>Admin::Anime#index</h1>
+
+<ul>
+  <% @animes.each do |anime| %>
+    <li>
+      <%= link_to(anime.to_s, admin_edit_anime_path(anime)) %>
+    </li>
+  <% end %>
+</ul>

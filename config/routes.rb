@@ -26,6 +26,11 @@ Rails.application.routes.draw do
       get 'users' => 'users#index', as: :index_users
       get 'users/:id/edit' => 'users#edit', as: :edit_user
       post 'users/:id/update' => 'users#update', as: :update_user
+
+      resource :animes, only: [:new, :create, :delete]
+      get 'animes' => 'animes#index', as: :index_animes
+      get 'animes/:id/edit' => 'animes#edit', as: :edit_anime
+      post 'animes/:id/update' => 'animes#update', as: :update_anime
     end
   end
 

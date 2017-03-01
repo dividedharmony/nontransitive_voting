@@ -1,0 +1,9 @@
+<h1>Admin::Anime#edit</h1>
+
+<h3>Created at: <%= @anime.created_at %></h3>
+<h3>Updated at: <%= @anime.updated_at %></h3>
+
+<%= form_for @anime, method: :post, url: admin_update_anime_path(@anime)  do |f| %>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= f.submit 'Update Anime' %>
+<% end %>
