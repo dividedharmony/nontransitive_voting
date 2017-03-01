@@ -2,7 +2,7 @@
 
 module Admin
   class AwardsController < ApplicationController
-    include AwardsHelper
+    include Admin::AwardsHelper
 
     before_action :possibilities_for_select, except: [:index]
 
