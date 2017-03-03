@@ -29,6 +29,11 @@ module Admin
       sync('Anime successfully edited', :edit)
     end
 
+    def delete
+      Anime.find(params[:id]).destroy!
+      redirect_to action: :index
+    end
+
     private
 
     def no_anime_found

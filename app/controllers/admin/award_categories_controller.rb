@@ -25,6 +25,11 @@ module Admin
       sync('Award Category successfully edited', :edit)
     end
 
+    def delete
+      AwardCategory.find(params[:id]).destroy!
+      redirect_to action: :index
+    end
+
     private
 
     def award_category_attr

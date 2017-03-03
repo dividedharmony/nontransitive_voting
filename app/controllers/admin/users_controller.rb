@@ -28,6 +28,11 @@ module Admin
       sync('User successfully edited', :edit)
     end
 
+    def delete
+      User.find(params[:id]).destroy!
+      redirect_to action: :index
+    end
+
     private
 
     def assign_user_from_params

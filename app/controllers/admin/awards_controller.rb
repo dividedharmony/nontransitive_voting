@@ -29,6 +29,11 @@ module Admin
       sync('Award successfully edited', :edit)
     end
 
+    def delete
+      Award.find(params[:id]).destroy!
+      redirect_to action: :index
+    end
+
     private
 
     def award_attr

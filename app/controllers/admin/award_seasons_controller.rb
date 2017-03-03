@@ -27,6 +27,11 @@ module Admin
       sync('Award Season successfully edited', :edit)
     end
 
+    def delete
+      AwardSeason.find(params[:id]).destroy!
+      redirect_to action: :index
+    end
+
     private
 
     def award_season_attr
