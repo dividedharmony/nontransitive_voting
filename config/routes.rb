@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       post 'animes/:id/delete' => 'animes#delete', as: :delete_anime
 
       post 'candidates' => 'candidates#create', as: :create_candidate
+      post 'candidates/:id/delete' => 'candidates#delete', as: :delete_candidate
     end
   end
 
