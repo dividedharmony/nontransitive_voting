@@ -37,6 +37,27 @@ RSpec.describe AwardSeason do
     end
   end
 
+  describe 'dependencies' do
+    let(:award_season) { create(:award_season) }
+
+    context 'if an award_season is deleted' do
+      subject(:destroy) { award_season.destroy }
+
+      before do
+        awards = create_list(:award, 2, award_season: award_season)
+        awards.each { |award| create_list(:candidate, 2, award: award) }
+      end
+
+      it 'deletes its associated awards' do
+        expect { destroy }.to change { Award.count }.from(2).to(0)
+      end
+
+      it 'deletes its associated candidates' do
+        expect { destroy }.to change { Candidate.count }.from(4).to(0)
+      end
+    end
+  end
+
   describe '#open?' do
     subject(:award_season) { create(:award_season, voting_starts_at: voting_starts_at, voting_ends_at: voting_ends_at) }
 

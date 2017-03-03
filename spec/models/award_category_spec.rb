@@ -24,6 +24,27 @@ RSpec.describe AwardCategory do
     end
   end
 
+  describe 'dependencies' do
+    let(:award_category) { create(:award_category) }
+
+    context 'if an award_category is deleted' do
+      subject(:destroy) { award_category.destroy }
+
+      before do
+        awards = create_list(:award, 2, award_category: award_category)
+        awards.each { |award| create_list(:candidate, 2, award: award) }
+      end
+
+      it 'deletes its associated awards' do
+        expect { destroy }.to change { Award.count }.from(2).to(0)
+      end
+
+      it 'deletes its associated candidates' do
+        expect { destroy }.to change { Candidate.count }.from(4).to(0)
+      end
+    end
+  end
+
   describe '.eligible' do
     let!(:anime) { create(:anime) }
     let!(:best_animated) { create(:award_category, candidate_type: 'Anime') }

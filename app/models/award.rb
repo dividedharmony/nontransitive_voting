@@ -7,6 +7,8 @@ class Award < ActiveRecord::Base
 
   before_create :prepopulate_voting_open
 
+  after_destroy :destroy_all_candidates
+
   def eligible?(candidate_source)
     award_category.candidate_type == candidate_source.class.name
   end
@@ -28,5 +30,9 @@ class Award < ActiveRecord::Base
 
   def prepopulate_voting_open
     self.voting_open = award_season.open?
+  end
+
+  def destroy_all_candidates
+    candidates.destroy_all
   end
 end

@@ -34,6 +34,27 @@ RSpec.describe Award do
     end
   end
 
+  describe 'dependencies' do
+    let(:award) { create(:award) }
+
+    context 'if an award is deleted' do
+      subject(:destroy) { award.destroy }
+
+      before do
+        candidates = create_list(:candidate, 2, award: award)
+        create(:ballot, candidate_a: candidates[0], candidate_b: candidates[1])
+      end
+
+      it 'deletes its associated candidates' do
+        expect { destroy }.to change { Candidate.count }.from(2).to(0)
+      end
+
+      it 'deletes its associated ballots' do
+        expect { destroy }.to change { Ballot.count }.from(1).to(0)
+      end
+    end
+  end
+
   describe '.create' do
     let(:award_category) { create(:award_category) }
     subject(:award) { Award.create!(award_category: award_category, award_season: award_season) }

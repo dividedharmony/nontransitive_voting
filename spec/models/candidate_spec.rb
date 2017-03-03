@@ -33,4 +33,46 @@ RSpec.describe Candidate do
       end
     end
   end
+
+  describe 'dependencies' do
+    let(:candidate) { create(:candidate, :ballot_friendly) }
+
+    context 'if a candidate is deleted' do
+      subject(:destroy) { candidate.destroy }
+
+      context 'if the candidate is associated with a ballot as candidate_a' do
+        let(:ballot) { create(:ballot, candidate_a: candidate) }
+
+        before do
+          create_list(:vote, 5, ballot: ballot, selected: candidate)
+          create_list(:vote, 5, ballot: ballot, selected: ballot.candidate_b)
+        end
+
+        it 'deletes its associated ballot' do
+          expect { destroy }.to change { Ballot.count }.from(1).to(0)
+        end
+
+        it 'deletes its associated votes' do
+          expect { destroy }.to change { Vote.count }.from(10).to(0)
+        end
+      end
+
+      context 'if the candidate is associated with a ballot as candidate_b' do
+        let(:ballot) { create(:ballot, candidate_b: candidate) }
+
+        before do
+          create_list(:vote, 5, ballot: ballot, selected: candidate)
+          create_list(:vote, 5, ballot: ballot, selected: ballot.candidate_a)
+        end
+
+        it 'deletes its associated ballot' do
+          expect { destroy }.to change { Ballot.count }.from(1).to(0)
+        end
+
+        it 'deletes its associated votes' do
+          expect { destroy }.to change { Vote.count }.from(10).to(0)
+        end
+      end
+    end
+  end
 end

@@ -71,6 +71,20 @@ RSpec.describe Ballot do
     end
   end
 
+  describe 'dependencies' do
+    let!(:ballot) { create(:ballot) }
+
+    context 'if a ballot is deleted' do
+      subject(:destroy) { ballot.destroy }
+
+      before { create_list(:vote, 5, ballot: ballot, selected: ballot.candidate_a) }
+
+      it 'those votes are deleted' do
+        expect { destroy }.to change { Vote.count }.from(5).to(0)
+      end
+    end
+  end
+
   describe '.with_candidate' do
     let!(:candidate) { create(:candidate, :ballot_friendly) }
 
