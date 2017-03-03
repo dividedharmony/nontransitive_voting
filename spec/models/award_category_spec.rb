@@ -49,9 +49,13 @@ RSpec.describe AwardCategory do
     let!(:anime) { create(:anime) }
     let!(:best_animated) { create(:award_category, candidate_type: 'Anime') }
     let!(:best_written) { create(:award_category, candidate_type: 'Anime') }
+    let!(:best_in_show) { create(:award_category, candidate_type: 'Dog') }
+    let!(:best_groomed) { create(:award_category, candidate_type: 'Dog') }
 
     subject(:eligible) { AwardCategory.eligible(anime) }
 
     it { is_expected.to include best_animated, best_written }
+
+    it { is_expected.not_to include best_in_show, best_groomed }
   end
 end
