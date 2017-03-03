@@ -1,1 +1,45 @@
 <h1>Admin Dashboard</h1>
+
+<h3>Links</h3>
+<ul>
+  <li>
+    <%= link_to 'Animes', admin_index_animes_path %>
+    <ul>
+      <li>
+        <%= link_to 'New Anime', new_admin_animes_path %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= link_to 'Award Categories', admin_index_award_categories_path %>
+    <ul>
+      <li>
+        <%= link_to 'New Award Category', new_admin_award_categories_path %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= link_to 'Award Seasons', admin_index_award_seasons_path %>
+    <ul>
+      <li>
+        <%= link_to 'New Award Season', new_admin_award_seasons_path %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= link_to 'Awards', admin_index_awards_path %>
+    <ul>
+      <li>
+        <%= link_to 'New Award', new_admin_awards_path %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= link_to 'Users', admin_index_users_path %>
+    <ul>
+      <li>
+        <%= link_to 'New Anime', new_admin_users_path %>
+      </li>
+    </ul>
+  </li>
+</ul>
