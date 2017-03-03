@@ -6,4 +6,8 @@
       <%= link_to(award.to_s, admin_edit_award_path(award)) %>
     </li>
   <% end %>
+  <hr />
+  <li>
+    <%= link_to 'New Award', new_admin_awards_path %>
+  </li>
 </ul>

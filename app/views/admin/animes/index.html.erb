@@ -6,4 +6,8 @@
       <%= link_to(anime.to_s, admin_edit_anime_path(anime)) %>
     </li>
   <% end %>
+  <hr />
+  <li>
+    <%= link_to 'New Anime', new_admin_animes_path %>
+  </li>
 </ul>

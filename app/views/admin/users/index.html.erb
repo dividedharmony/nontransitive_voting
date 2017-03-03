@@ -2,6 +2,12 @@
 
 <ul>
   <% @users.each do |user| %>
-  <li><%= link_to(user.email, admin_edit_user_path(user)) %></li>
+    <li>
+      <%= link_to(user.email, admin_edit_user_path(user)) %>
+    </li>
   <% end %>
+  <hr />
+  <li>
+    <%= link_to 'New User', new_admin_users_path %>
+  </li>
 </ul>
