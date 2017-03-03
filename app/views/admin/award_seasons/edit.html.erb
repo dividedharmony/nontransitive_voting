@@ -3,6 +3,8 @@
 <h3>Created at: <%= @award_season.created_at %></h3>
 <h3>Updated at: <%= @award_season.updated_at %></h3>
 
+<%= link_to 'Delete', admin_delete_award_season_url(id: @award_season.id), method: :post %>
+
 <%= form_for @award_season, method: :post, url: admin_update_award_season_path(@award_season)  do |f| %>
     <%= render partial: 'form', locals: { f: f } %>
     <%= f.submit 'Update Award season' %>

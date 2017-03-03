@@ -8,6 +8,8 @@
     <%= f.submit 'Update Anime' %>
 <% end %>
 
+<%= link_to 'Delete', admin_delete_anime_url(id: @formula.anime.id), method: :post %>
+
 <h3>Candidacies</h3>
 <ul>
   <% @formula.candidates.each do |candidate| %>
@@ -17,6 +19,7 @@
       <% else %>
           <%= "Applied for #{candidate.award.to_s}" %>
       <% end %>
+      <%= link_to 'Delete', admin_delete_candidate_url(id: candidate.id), method: :post %>
     </li>
   <% end %>
 

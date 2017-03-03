@@ -3,6 +3,8 @@
 <h3>Created at: <%= @user.created_at %></h3>
 <h3>Updated at: <%= @user.updated_at %></h3>
 
+<%= link_to 'Delete', admin_delete_user_url(id: @user.id), method: :post %>
+
 <div id="clearance" class="sign-up">
   <h2><%= t(".title") %></h2>
 

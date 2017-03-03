@@ -3,6 +3,8 @@
 <h3>Created at: <%= @award.created_at %></h3>
 <h3>Updated at: <%= @award.updated_at %></h3>
 
+<%= link_to 'Delete', admin_delete_award_url(id: @award.id), method: :post %>
+
 <%= form_for @award, method: :post, url: admin_update_award_path(@award)  do |f| %>
     <%= render partial: 'form', locals: { f: f } %>
     <%= f.submit 'Update Award' %>
