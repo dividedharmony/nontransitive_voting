@@ -2,37 +2,23 @@
 
 module StraightA
   class BallotGenerator
-    attr_reader :candidates
+    attr_reader :candidate_a, :other_candidates
 
-    # @param award [Award]
-    def initialize(award)
-      @candidates = Candidate.where(award: award).to_a
+    def initialize(candidate)
+      @candidate_a = candidate
+      @other_candidates = candidate.competitors.to_a
     end
 
     def generate_ballots
-      Rails.logger.info 'Beginning to generate ballots'
-      cycle_gracefully
-      Rails.logger.info 'Finished generating ballots'
-    end
-
-    private
-
-    def cycle_gracefully
       Ballot.transaction do
         cycle_through_candidates
       end
     end
 
-    def cycle_through_candidates
-      loop do
-        candidate_a = candidates.pop
-        break if candidates.empty?
-        cycle_through_b_candidates(candidate_a)
-      end
-    end
+    private
 
-    def cycle_through_b_candidates(candidate_a)
-      candidates.each do |candidate_b|
+    def cycle_through_candidates
+      other_candidates.each do |candidate_b|
         next if Ballot.already_created?(candidate_a, candidate_b)
         Ballot.create!(candidate_a: candidate_a, candidate_b: candidate_b)
       end
