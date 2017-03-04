@@ -9,3 +9,9 @@
       <%= link_to 'Begin Voting', vote_on_ballot_url(Ballot.first.id) %>
     </h3>
 <% end %>
+
+<% if Award.any? %>
+    <h3>
+      <%= link_to 'List of Awards', index_awards_path %>
+    </h3>
+<% end %>
