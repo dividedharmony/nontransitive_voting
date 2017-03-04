@@ -1,0 +1,12 @@
+<%# awards/_winners.html.erb %>
+
+<% if winners.any? %>
+    <%= content_tag(:h4, 'Winner'.pluralize(winners.count)) %>
+    <ul>
+      <% winners.each do |winner| %>
+          <li>
+            <%= winner.to_s %>
+          </li>
+      <% end %>
+    </ul>
+<% end %>

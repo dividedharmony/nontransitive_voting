@@ -1,0 +1,14 @@
+<h1>Awards#Index</h1>
+
+<ul>
+  <% @awards.each do |award| %>
+    <li>
+      <% if award.voting_open? %>
+        Voting still open for <%= award.to_s %>!
+      <% else %>
+        Voting is not open for <%= award.to_s %>
+          <%= render partial: 'winners', locals: { winners: award.winners } %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

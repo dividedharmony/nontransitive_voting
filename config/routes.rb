@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   post 'vote_candidate/:ballot_id/:a_or_b', to: 'ballots#vote_candidate', as: :vote_candidate
 
   get 'finished_voting', to: 'pages#finished_voting', as: :finished_voting
+  get 'awards', to: 'awards#index', as: :index_awards
 
   # Clearance Routes:
   #
