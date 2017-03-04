@@ -27,8 +27,6 @@ class BallotsController < ApplicationController
   end
 
   def build_vote(candidate_string)
-    Vote.new(ballot: @ballot,
-             selected_type: @ballot.attributes["#{candidate_string}_type"],
-             selected_id: @ballot.attributes["#{candidate_string}_id"])
+    Vote.new(ballot: @ballot, selected_id: @ballot.attributes["#{candidate_string}_id"])
   end
 end
