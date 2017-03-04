@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'straight_a/ballot_generator'
+
 module StraightA
   module Operation
     module Candidates
