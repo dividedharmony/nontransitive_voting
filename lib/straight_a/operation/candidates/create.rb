@@ -19,7 +19,8 @@ module StraightA
         end
 
         def operate!
-          Candidate.create!(source: anime, award: award)
+          candidate = Candidate.create!(source: anime, award: award)
+          BallotGenerator.new(candidate).generate_ballots
         end
       end
     end
