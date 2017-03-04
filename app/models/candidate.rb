@@ -13,6 +13,10 @@ class Candidate < ActiveRecord::Base
 
   delegate :to_s, to: :source
 
+  def competitors
+    award.candidates.where.not(id: self.id)
+  end
+
   private
 
   def source_is_eligible_for_award
