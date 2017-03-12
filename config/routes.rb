@@ -43,8 +43,8 @@ Rails.application.routes.draw do
   end
 
   get '/animes', to: 'animes#index', as: :index_animes
-  get 'vote/:id', to: 'ballots#show', as: :vote_on_ballot
-  post 'vote_candidate/:ballot_id/:a_or_b', to: 'ballots#vote_candidate', as: :vote_candidate
+  get 'ballots/:id', to: 'ballots#show', as: :show_ballot
+  post 'ballots/:ballot_id/vote/:candidate_id', to: 'ballots#vote_candidate', as: :vote_candidate
 
   get 'finished_voting', to: 'pages#finished_voting', as: :finished_voting
   get 'awards', to: 'awards#index', as: :index_awards

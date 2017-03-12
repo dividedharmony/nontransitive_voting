@@ -8,7 +8,8 @@ class BallotsController < ApplicationController
 
   def vote_candidate
     @ballot = Ballot.find(params[:ballot_id])
-    @vote = build_vote(params[:a_or_b])
+    @candidate = Candidate.find(params[:candidate_id])
+    @vote = Vote.new(ballot: @ballot, selected: @candidate)
     if @vote.save
       next_ballot
     else
@@ -19,14 +20,11 @@ class BallotsController < ApplicationController
   private
 
   def next_ballot
-    if Ballot.last == @ballot
+    @ballot = @ballot.next_ballot
+    if @ballot.nil?
       redirect_to finished_voting_url
     else
-      redirect_to action: :show, id: Ballot.find_by('id > ?', @ballot.id)
+      render action: :show
     end
-  end
-
-  def build_vote(candidate_string)
-    Vote.new(ballot: @ballot, selected_id: @ballot.attributes["#{candidate_string}_id"])
   end
 end
