@@ -18,6 +18,11 @@ class Ballot < ActiveRecord::Base
             candidate2_id: candidate2.id).
           exists?
     end
+
+    def first_for(given_award)
+      ballots = given_award.ballots
+      ballots.any? ? ballots.order(id: :asc).first : nil
+    end
   end
 
   def candidates

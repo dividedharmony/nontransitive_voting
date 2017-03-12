@@ -161,6 +161,36 @@ RSpec.describe Ballot do
     end
   end
 
+  describe '.first_for' do
+    let(:award) { create(:award) }
+    subject(:first_for) { Ballot.first_for(award) }
+
+    context 'if no ballots exist for the given award' do
+      it { is_expected.to be_nil }
+
+      context 'if ballots exist for other awards' do
+        before do
+          other_award = create(:award)
+          create_list(:ballot, 3, award: other_award)
+        end
+
+        it { is_expected.to be_nil }
+      end
+    end
+
+    context 'if ballots do exist for the given award' do
+      before do
+        # Unrelated ballots that .first_for should not include
+        other_award = create(:award)
+        create_list(:ballot, 3, award: other_award)
+        # Ballots for the given_award
+        create_list(:ballot, 3, award: award)
+      end
+
+      it { is_expected.to eq award.ballots.order(id: :asc).first }
+    end
+  end
+
   describe '#candidates' do
     let(:candidate_a) { create(:candidate, :ballot_friendly) }
     let(:candidate_b) { create(:candidate, :ballot_friendly) }
