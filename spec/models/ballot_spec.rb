@@ -201,6 +201,32 @@ RSpec.describe Ballot do
     it { is_expected.to match_array [candidate_a, candidate_b] }
   end
 
+  describe '#next_ballot' do
+    let!(:award) { create(:award) }
+    let!(:ballot) { create(:ballot, award: award) }
+
+    subject(:next_ballot) { ballot.next_ballot }
+
+    context 'a ballot for the same award exists with a larger id' do
+      let!(:later_ballot) { create(:ballot) }
+
+      it { is_expected.to eq later_ballot }
+    end
+
+    context 'no ballot for the same award exists with a larger id' do
+      it { is_expected.to be_nil }
+
+      context 'a ballot for another award exists with a larger id' do
+        before do
+          other_award = create(:award)
+          create(:ballot, award: other_award)
+        end
+
+        it { is_expected.to be_nil }
+      end
+    end
+  end
+
   describe '#candidate_a_votes' do
     let(:ballot) { create(:ballot) }
 

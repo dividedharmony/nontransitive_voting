@@ -29,6 +29,10 @@ class Ballot < ActiveRecord::Base
     [candidate_a, candidate_b]
   end
 
+  def next_ballot
+    award.ballots.where('id > ?', self.id).order(id: :asc).first
+  end
+
   def candidate_a_votes
     @candidate_a_votes ||= votes.untallied.where(selected: candidate_a).count
   end
