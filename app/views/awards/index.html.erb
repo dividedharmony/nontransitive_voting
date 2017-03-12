@@ -2,13 +2,15 @@
 
 <ul>
   <% @awards.each do |award| %>
-    <li>
-      <% if award.voting_open? && award.ballots.any? %>
-        <%= link_to "Vote for #{award.to_s} now!", begin_voting_path(award) %>
-      <% else %>
-        Voting is not open for <%= award.to_s %>
-          <%= render partial: 'winners', locals: { winners: award.winners } %>
-      <% end %>
-    </li>
+    <% cache award, expires_in: award_cache_expire_time(award) do %>
+      <li>
+        <% if award.voting_open? && award.ballots.any? %>
+            <%= link_to "Vote for #{award.to_s} now!", begin_voting_path(award) %>
+        <% else %>
+            Voting is not open for <%= award.to_s %>
+            <%= render partial: 'winners', locals: { winners: award.winners } %>
+        <% end %>
+      </li>
+    <% end %>
   <% end %>
 </ul>
