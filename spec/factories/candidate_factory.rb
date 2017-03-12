@@ -9,7 +9,6 @@ FactoryGirl.define do
     # to conform to the :candidates_are_competing validation
     #
     trait :ballot_friendly do
-      source { Anime.find_or_create_by!(title: 'One Piece') }
       award { Award.first || create(:award) }
     end
 
