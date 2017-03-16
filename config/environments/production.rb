@@ -40,7 +40,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -80,6 +80,12 @@ Rails.application.configure do
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  require 'rack/rewrite'
+
+  config.middleware.insert_before(ActionDispatch::SSL, Rack::Rewrite) do
+    r301(/.*/, proc { |path, rack_env| "https://www.animedecided.com#{path}" }, if: proc { |rack_env| !(rack_env['SERVER_NAME'] =~ /www\./i) && rack_env['SERVER_NAME'] =~ /animedecided/ })
   end
 
   # Do not dump schema after migrations.
