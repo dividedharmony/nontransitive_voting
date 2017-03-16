@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'clearance', '~> 1.16'
 gem 'ffaker'
+gem 'rack-attack', '~> 5.0'
 gem 'rack-rewrite', '~> 1.5.0'
 
 group :development, :test do
