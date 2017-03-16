@@ -13,5 +13,6 @@ module StraightAAwards
     # -- all .rb files in that directory are automatically loaded.
 
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.middleware.use Rack::Attack
   end
 end
