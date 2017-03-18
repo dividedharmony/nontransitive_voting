@@ -1,0 +1,25 @@
+// straight_a/variables.scss
+
+$sa-keppel: #46b29d !default;
+$sa-shade: #324d5c !default;
+$sa-highlight: #f0ca4d !default;
+$sa-true-blue: #6295b2 !default;
+$sa-orange: #e37b40 !default;
+$sa-red: #de5b49 !default;
+
+$brand-primary:         $sa-keppel !default;
+$brand-success:         $brand-primary !default;
+$brand-info:            $sa-true-blue !default;
+$brand-warning:         $sa-orange !default;
+$brand-danger:          $sa-red !default;
+
+//== Buttons
+//
+
+$btn-blue-color:              #fff !default;
+$btn-blue-bg:                 $sa-true-blue !default;
+$btn-blue-border:             darken($btn-blue-bg, 5%) !default;
+
+$btn-yellow-color:            #fff !default;
+$btn-yellow-bg:               $sa-highlight !default;
+$btn-yellow-border:           darken($btn-yellow-bg, 5%) !default;
