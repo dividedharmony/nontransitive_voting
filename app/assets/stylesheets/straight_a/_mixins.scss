@@ -1,0 +1,23 @@
+// straight_a/_mixins.scss
+
+@mixin billboard($height) {
+  position: relative;
+  height: $height;
+
+  .billboard-outer {
+    display: table;
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .billboard-inner {
+    display: table-cell;
+    vertical-align: middle;
+    color: $sa-white;
+    text-align: center;
+    text-shadow: 1px 1px $sa-black;
+  }
+}

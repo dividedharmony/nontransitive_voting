@@ -1,9 +1,49 @@
-<h1>Welcome to the Straight A Awards!</h1>
+<div class="home-billboard">
+  <div class="billboard-outer">
+    <div class="billboard-inner">
+      <h3 class="home-billboard-title">
+        Welcome to AnimeDecided.com
+      </h3>
+      <p class="home-billboard-excerpt">
+        Vote for the best anime of the year!
+      </p>
+      <div class="home-billboard-btn">
+        <%= link_to 'Vote Now', '#', class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h3>
-  <%= link_to 'List of Animes', index_animes_path %>
-</h3>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="cta-panel cta-blue">
+        <h3 class="cta-title">
+          More than just Anime of the year
+        </h3>
+        <p class="cta-excerpt">
+          We have several different award categories
+          open to voting right now! Help your favorite
+          anime win best animated, best written, or
+          best directed!
+        </p>
+        <%= link_to 'Vote on each award', index_awards_path, class: 'btn btn-blue' %>
+      </div>
+    </div>
 
-<h3>
-  <%= link_to 'List of Awards', index_awards_path %>
-</h3>
+    <div class="col-sm-6">
+      <div class="cta-panel cta-orange">
+        <h3 class="cta-title">
+          Check out all the eligible shows
+        </h3>
+        <p class="cta-excerpt">
+          We have a large list of shows eligible for
+          each of our rewards. Chances are good that even
+          that all of your favorite anime of the past year
+          are in the running for Anime of the Year.
+        </p>
+        <%= link_to 'Check out our anime list', index_animes_path, class: 'btn btn-orange' %>
+      </div>
+    </div>
+  </div>
+</div>

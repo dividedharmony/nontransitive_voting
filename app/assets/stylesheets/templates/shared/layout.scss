@@ -1,0 +1,20 @@
+// templates/shared/layout.scss
+
+$footer-height: 100px;
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  height: auto;
+}
+
+.body-wrapper {
+  min-height: calc(100vh - #{$footer-height});
+}
+
+.footer {
+  height: $footer-height;
+}

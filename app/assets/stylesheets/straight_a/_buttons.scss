@@ -7,3 +7,7 @@
 .btn-yellow {
   @include button-variant($btn-yellow-color, $btn-yellow-bg, $btn-yellow-border);
 }
+
+.btn-orange {
+  @include button-variant($btn-orange-color, $btn-orange-bg, $btn-orange-border);
+}

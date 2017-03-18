@@ -3,4 +3,11 @@
 @import "straight_a/variables";
 @import "bootstrap-sprockets";
 @import "straight_a/bootstrap";
+@import "straight_a/mixins";
 @import "straight_a/buttons";
+
+// Templates
+@import "templates/shared/layout";
+@import "templates/shared/header";
+@import "templates/shared/footer";
+@import "templates/homepage";

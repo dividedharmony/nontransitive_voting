@@ -1,0 +1,43 @@
+// templates/homepage.scss
+
+.home-billboard {
+  @include billboard(400px);
+  background-image: asset_url('samples/anime-wallpaper.jpg');
+  background-size: 110% auto;
+  background-position: 50% 50%;
+  margin-bottom: 20px;
+}
+
+.home-billboard-title {
+  font-size: 50px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.home-billboard-excerpt {
+  font-size: 26px;
+}
+
+.home-billboard-btn {
+  .btn {
+    border: none;
+    font-size: 22px;
+    text-transform: uppercase;
+    text-shadow: none;
+  }
+}
+
+.cta-panel {
+  border: 5px solid;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 10px;
+
+  &.cta-blue {
+    border-color: $sa-true-blue;
+  }
+
+  &.cta-orange {
+    border-color: $sa-orange;
+  }
+}
