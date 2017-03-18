@@ -6,7 +6,11 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-ENV.update YAML.load_file(File.expand_path('../application.yml', __FILE__))
+begin
+  ENV.update YAML.load_file(File.expand_path('../application.yml', __FILE__))
+rescue Errno::ENOENT
+  $stdout.puts 'No application.yml found'
+end
 
 module StraightAAwards
   class Application < Rails::Application
