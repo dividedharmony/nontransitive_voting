@@ -6,6 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+ENV.update YAML.load_file(File.expand_path('../application.yml', __FILE__))
+
 module StraightAAwards
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
