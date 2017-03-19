@@ -35,10 +35,12 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'aws-sdk', '~> 2.8'
 gem 'bootstrap-sass'
 gem 'clearance', '~> 1.16'
 gem 'ffaker'
 gem 'mini_racer'
+gem 'paperclip', '~> 5.1'
 gem 'rack-attack', '~> 5.0'
 gem 'rack-rewrite', '~> 1.5.0'
 
